@@ -19,8 +19,8 @@ window.PORTAFOLIO = {
     nombre: 'Dariel Angel Arro Moreno',
     nombreCorto: 'Dariel',
     usuarioGithub: 'DarielAngel',
-    // PENDIENTE: pon aquí una foto tuya (por ejemplo 'assets/foto.jpg'). Vacío = se muestran tus iniciales.
-    avatar: '',
+    // Foto de tu perfil de GitHub (se actualiza sola). Para usar otra: 'assets/foto.jpg'. Vacío = iniciales.
+    avatar: 'https://github.com/DarielAngel.png?size=400',
     titulo: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
     especialidad: { es: '.NET · Vue · Django', en: '.NET · Vue · Django' },
     lema: {

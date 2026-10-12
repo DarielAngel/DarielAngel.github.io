@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dariel Angel Arro Moreno</title>
+<meta name="description" content="Portafolio de Dariel Angel Arro Moreno, desarrollador full-stack: .NET, Vue, Django, Docker. Proyectos, experiencia y contacto.">
+<meta property="og:title" content="Dariel Angel Arro Moreno — Desarrollador full-stack">
+<meta property="og:description" content="Aplicaciones web completas: de la base de datos y la API a la interfaz, con pruebas y despliegue.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b8f66">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Aplica el tema guardado antes de pintar, para que no parpadee.
+  try { var t = localStorage.getItem('portafolio-tema'); if (t) document.documentElement.setAttribute('data-theme', t) } catch (e) {}
+</script>
+</head>
+<body>
+<header class="header">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><span class="monogram" id="logo">DA</span><span class="brand-name" id="logo-name">Dariel</span></a>
+    <nav class="nav" id="nav" aria-label="Principal"></nav>
+    <div class="tools">
+      <button class="icon-btn" id="btn-idioma" type="button">EN</button>
+      <button class="icon-btn" id="btn-tema" type="button"></button>
+      <button class="icon-btn menu-btn" id="btn-menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menú"></button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text" id="hero-text"></div>
+      <div class="portrait" id="portrait"></div>
+    </div>
+  </section>
+
+  <section class="section band" id="sobre">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">$ whoami</span><h2 data-t="seccionSobre"></h2></div>
+      <div class="about-grid">
+        <div class="about-text" id="about-text"></div>
+        <div class="stats" id="stats"></div>
+      </div>
+      <div class="section-head" style="margin: 64px 0 0"><h2 data-t="seccionHabilidades" style="font-size:1.7rem"></h2></div>
+      <div class="skills" id="skills" style="margin-top:24px"></div>
+    </div>
+  </section>
+
+  <section class="section" id="proyectos">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">github.com/DarielAngel</span><h2 data-t="seccionDestacados"></h2></div>
+      <div class="featured" id="featured"></div>
+      <div class="more-head">
+        <h3 data-t="seccionMas"></h3>
+        <div class="filters" id="filters" role="group"></div>
+      </div>
+      <div class="grid-more" id="more"></div>
+    </div>
+  </section>
+
+  <section class="section band" id="trayectoria">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">$ git log</span><h2 data-t="seccionTrayectoria"></h2></div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <section class="section" id="servicios">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">$ ls servicios/</span><h2 data-t="seccionServicios"></h2></div>
+      <div class="services" id="services"></div>
+    </div>
+  </section>
+
+  <section class="section" id="contacto" style="padding-top:0">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <span class="eyebrow" style="color:inherit;opacity:.7">$ ping dariel</span>
+          <h2 data-t="seccionContacto" style="margin-top:10px"></h2>
+          <p data-t="contactoTexto"></p>
+        </div>
+        <div class="contact-list" id="contact-list"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap"><span id="footer-name"></span><span data-t="pie"></span></div>
+</footer>
+
+<script src="datos.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

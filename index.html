@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dariel Angel Arro Moreno</title>
-<meta name="description" content="Portafolio de Dariel Angel Arro Moreno, desarrollador full-stack: .NET, Vue, Django, Docker. Proyectos, experiencia y contacto.">
+<meta name="description" content="Dariel Angel Arro Moreno, desarrollador full-stack (.NET, Vue, Django). Tiendas en línea, sistemas de gestión y paneles. Disponible en remoto: tiempo completo, medio tiempo o por proyecto.">
 <meta property="og:title" content="Dariel Angel Arro Moreno — Desarrollador full-stack">
 <meta property="og:description" content="Aplicaciones web completas: de la base de datos y la API a la interfaz, con pruebas y despliegue.">
 <meta property="og:type" content="website">
@@ -42,19 +42,19 @@
 
   <section class="section band" id="sobre">
     <div class="wrap">
-      <div class="section-head"><span class="eyebrow">$ whoami</span><h2 data-t="seccionSobre"></h2></div>
+      <div class="section-head"><span class="eyebrow" data-t="cejaSobre"></span><h2 data-t="seccionSobre"></h2></div>
       <div class="about-grid">
         <div class="about-text" id="about-text"></div>
         <div class="stats" id="stats"></div>
       </div>
-      <div class="section-head" style="margin: 64px 0 0"><h2 data-t="seccionHabilidades" style="font-size:1.7rem"></h2></div>
-      <div class="skills" id="skills" style="margin-top:24px"></div>
+      <h3 class="sub-head" data-t="seccionHabilidades"></h3>
+      <div class="skills" id="skills"></div>
     </div>
   </section>
 
   <section class="section" id="proyectos">
     <div class="wrap">
-      <div class="section-head"><span class="eyebrow">github.com/DarielAngel</span><h2 data-t="seccionDestacados"></h2></div>
+      <div class="section-head"><span class="eyebrow" data-t="cejaProyectos"></span><h2 data-t="seccionDestacados"></h2></div>
       <div class="featured" id="featured"></div>
       <div class="more-head">
         <h3 data-t="seccionMas"></h3>
@@ -64,27 +64,46 @@
     </div>
   </section>
 
-  <section class="section band" id="trayectoria">
+  <section class="section band" id="servicios">
     <div class="wrap">
-      <div class="section-head"><span class="eyebrow">$ git log</span><h2 data-t="seccionTrayectoria"></h2></div>
-      <div class="timeline" id="timeline"></div>
-    </div>
-  </section>
-
-  <section class="section" id="servicios">
-    <div class="wrap">
-      <div class="section-head"><span class="eyebrow">$ ls servicios/</span><h2 data-t="seccionServicios"></h2></div>
+      <div class="section-head"><span class="eyebrow" data-t="cejaServicios"></span><h2 data-t="seccionServicios"></h2></div>
       <div class="services" id="services"></div>
     </div>
   </section>
 
-  <section class="section" id="contacto" style="padding-top:0">
+  <section class="section" id="trabajo">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow" data-t="cejaTrabajo"></span><h2 data-t="seccionTrabajo"></h2></div>
+      <ol class="process" id="process"></ol>
+      <div class="terms-wrap">
+        <div class="terms" id="terms"></div>
+        <p class="ai-note" id="ai-note"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" id="trayectoria">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow" data-t="cejaTrayectoria"></span><h2 data-t="seccionTrayectoria"></h2></div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <section class="section" id="testimonios" hidden>
+    <div class="wrap">
+      <div class="section-head"><h2 data-t="testimonios"></h2></div>
+      <div class="quotes" id="quotes"></div>
+    </div>
+  </section>
+
+  <section class="section" id="contacto">
     <div class="wrap">
       <div class="contact">
         <div>
-          <span class="eyebrow" style="color:inherit;opacity:.7">$ ping dariel</span>
+          <span class="eyebrow" data-t="cejaContacto" style="color:inherit;opacity:.75"></span>
           <h2 data-t="seccionContacto" style="margin-top:10px"></h2>
           <p data-t="contactoTexto"></p>
+          <div class="contact-cta" id="contact-cta"></div>
         </div>
         <div class="contact-list" id="contact-list"></div>
       </div>

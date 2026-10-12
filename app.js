@@ -27,6 +27,11 @@
     luna: '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
     menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
     maletin: '<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>',
+    reloj: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    chat: '<path d="M4 5h16v11H9l-5 4V5z"/><path d="M8 9.5h8M8 12.5h5"/>',
+    documento: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+    cohete: '<path d="M12 15c-2-2-3-5-1-9 2-3 6-3 8-3 0 2 0 6-3 8-4 2-7 1-9-1"/><path d="M9 13 5 17M7 14l-3-1 3-3M10 17l1 3 3-3"/><circle cx="15" cy="9" r="1.3"/>',
+    whatsapp: '<path d="M4 20l1.3-4A8 8 0 1 1 8 19z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.6-2-.9-.8.8c-1-.4-1.9-1.3-2.3-2.3l.8-.8-.9-2L9.5 9z"/>',
     birrete: '<path d="m2 9 10-5 10 5-10 5L2 9z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/>'
   }
   const icon = (name, cls = '') =>
@@ -43,11 +48,22 @@
   let filtro = 'todas'
   const tx = (v) => (v && typeof v === 'object' && !Array.isArray(v) ? (v[lang] ?? v.es) : v)
   const T = () => D.textos[lang]
-  const repoUrl = (r) => `https://github.com/${D.perfil.usuarioGithub}/${r}`
   const cat = (id) => D.categorias[id] || { es: id, en: id, color: 'esmeralda' }
+  const cvUrl = () => tx(D.perfil.cv)
+
+  // 'Repo' o 'Repo@rama' → enlace al repositorio (o a esa rama)
+  function repoInfo(r) {
+    const [name, branch] = r.split('@')
+    const base = `https://github.com/${D.perfil.usuarioGithub}/${name}`
+    return { name, url: branch ? `${base}/tree/${branch}` : base }
+  }
 
   function initials(name) {
     return name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase()
+  }
+
+  function mailto() {
+    return `mailto:${D.contacto.email}?subject=${encodeURIComponent(T().asuntoCorreo)}`
   }
 
   // ---------- Secciones ----------
@@ -72,30 +88,36 @@
       ${p.disponible ? `<span class="badge rise"><span class="pulse"></span>${esc(tx(p.disponibilidad))}</span>` : ''}
       <span class="hello rise">${esc(t.hola)}</span>
       <h1 class="rise">${esc(first)} <span class="grad">${esc(rest.join(' '))}</span></h1>
-      <p class="role rise">${esc(tx(p.titulo))} · ${esc(tx(p.ubicacion))}</p>
+      <p class="role rise">${esc(tx(p.titulo))} <span class="role-spec">${esc(tx(p.especialidad))}</span></p>
       <p class="lede rise">${esc(tx(p.lema))}</p>
+      <ul class="facts rise">${(p.datosRapidos || []).map((d) => `<li>${icon(d.icono)}${esc(tx(d.texto))}</li>`).join('')}</ul>
       <div class="actions rise">
-        <a class="btn btn-primary" href="#proyectos">${esc(t.verProyectos)} ${icon('flecha')}</a>
-        ${p.cv ? `<a class="btn btn-ghost" href="${esc(p.cv)}" target="_blank" rel="noopener">${icon('descarga')} ${esc(t.descargarCV)}</a>` : ''}
+        <a class="btn btn-primary" href="#contacto">${esc(t.pedirPresupuesto)} ${icon('flecha')}</a>
+        ${p.cv ? `<a class="btn btn-ghost" href="${esc(cvUrl())}" target="_blank" rel="noopener">${icon('descarga')} ${esc(t.descargarCV)}</a>` : ''}
+        <a class="btn btn-link" href="#proyectos">${esc(t.verProyectos)}</a>
       </div>
       <div class="socials rise">
-        <a href="${esc(c.github)}" target="_blank" rel="noopener">${icon('github')} GitHub</a>
         ${c.telegram ? `<a href="https://t.me/${esc(c.telegram)}" target="_blank" rel="noopener">${icon('telegram')} @${esc(c.telegram)}</a>` : ''}
+        ${c.whatsapp ? `<a href="https://wa.me/${esc(c.whatsapp)}" target="_blank" rel="noopener">${icon('whatsapp')} WhatsApp</a>` : ''}
+        <a href="${esc(c.github)}" target="_blank" rel="noopener">${icon('github')} GitHub</a>
         ${c.linkedin ? `<a href="${esc(c.linkedin)}" target="_blank" rel="noopener">${icon('linkedin')} LinkedIn</a>` : ''}
       </div>`
-    const chips = [['C# · .NET', 'var(--ambar)'], ['Vue 3', 'var(--esmeralda)'], ['Docker', 'var(--cielo)']]
+    const chips = [['C# · .NET', 'var(--ambar)'], ['Vue 3', 'var(--esmeralda)'], ['Django', 'var(--cielo)']]
+    const face = p.avatar
+      ? `<img src="${esc(p.avatar)}" alt="${esc(p.nombre)}" width="400" height="400">`
+      : `<span class="initials">${esc(initials(p.nombre))}</span>`
     $('#portrait').innerHTML = `
       <div class="portrait-ring"></div>
-      <div class="portrait-inner"><img src="${esc(p.avatar)}" alt="${esc(p.nombre)}" width="400" height="400"></div>
+      <div class="portrait-inner">${face}</div>
       ${chips.map(([l, col]) => `<span class="chip-float"><i style="background:${col}"></i>${l}</span>`).join('')}`
     const img = $('#portrait img')
-    // Si la foto no carga (sin conexión, o la vista previa que bloquea imágenes externas), van las iniciales.
-    img.addEventListener('error', () => { img.parentElement.innerHTML = `<span class="initials">${esc(initials(p.nombre))}</span>` }, { once: true })
+    // Si la foto no carga, van las iniciales.
+    if (img) img.addEventListener('error', () => { img.parentElement.innerHTML = `<span class="initials">${esc(initials(p.nombre))}</span>` }, { once: true })
   }
 
   function renderAbout() {
     $('#about-text').innerHTML = tx(D.sobreMi).map((par) => `<p>${esc(par)}</p>`).join('')
-    $('#stats').innerHTML = D.cifras.map((c) => `<div class="stat"><b>${esc(c.valor)}</b><span>${esc(tx(c.texto))}</span></div>`).join('')
+    $('#stats').innerHTML = D.cifras.map((c) => `<div class="stat"><b>${esc(lang === 'en' && c.valorEn ? c.valorEn : c.valor)}</b><span>${esc(tx(c.texto))}</span></div>`).join('')
     $('#skills').innerHTML = D.habilidades.map((g) => `
       <div class="skill-group" data-c="${esc(g.color)}">
         <h3><span class="dot" style="background:var(--c)"></span>${esc(tx(g.grupo))}</h3>
@@ -105,16 +127,22 @@
 
   function links(pr) {
     const t = T()
-    const repos = (pr.repos || []).map((r) =>
-      `<a class="repo-link" href="${repoUrl(r)}" target="_blank" rel="noopener" title="${esc(t.codigo)}: ${esc(r)}">${icon('github')}<span>${esc(r)}</span></a>`).join('')
-    const demo = pr.demo ? `<a class="repo-link demo" href="${esc(pr.demo)}" target="_blank" rel="noopener">${icon('externo')}<span>${esc(t.demo)}</span></a>` : ''
+    const repos = (pr.repos || []).map((r) => {
+      const { name, url } = repoInfo(r)
+      return `<a class="repo-link" href="${esc(url)}" target="_blank" rel="noopener" title="${esc(t.codigo)}: ${esc(name)}">${icon('github')}<span>${esc(name)}</span></a>`
+    }).join('')
+    const demo = pr.demo ? `<a class="repo-link demo" href="${esc(pr.demo)}" target="_blank" rel="noopener">${icon('externo')}<span>${esc(pr.demoTexto ? tx(pr.demoTexto) : t.demo)}</span></a>` : ''
     return `<div class="links">${demo}${repos}</div>`
   }
+
+  const tags = (pr) => `<div class="tags">${(pr.stack || []).map((s) => `<span class="tag">${esc(tx(s))}</span>`).join('')}</div>`
+  const meta = (pr, c) => `<div class="card-meta"><span class="pill">${esc(tx(c))}</span>${pr.fecha ? `<span class="date">${esc(tx(pr.fecha))}</span>` : ''}</div>`
 
   function renderProjects() {
     const visibles = D.proyectos.filter((p) => p.visible !== false)
     const destacados = visibles.filter((p) => p.destacado)
     const resto = visibles.filter((p) => !p.destacado)
+    const t = T()
 
     $('#featured').innerHTML = destacados.map((pr) => {
       const c = cat(pr.categoria)
@@ -122,26 +150,28 @@
         ? `<div class="shot"><div class="shot-bar"><i></i><i></i><i></i></div><img src="${esc(pr.imagen)}" alt="${esc(tx(pr.titulo))}"></div>`
         : icon(pr.icono, 'big-icon')
       const wins = tx(pr.logros) || []
+      const bannerTag = pr.demo ? 'a' : 'div'
+      const bannerAttrs = pr.demo ? ` href="${esc(pr.demo)}" target="_blank" rel="noopener" aria-label="${esc(t.demo)}: ${esc(tx(pr.titulo))}"` : ''
       return `
         <article class="card" data-c="${esc(c.color)}">
-          <div class="banner">${banner}</div>
+          <${bannerTag} class="banner"${bannerAttrs}>${banner}${pr.demo ? `<span class="live-badge">${icon('externo')}${esc(t.demo)}</span>` : ''}</${bannerTag}>
           <div class="card-body">
-            <span class="pill">${esc(tx(c))}</span>
+            ${meta(pr, c)}
             <h3>${esc(tx(pr.titulo))}</h3>
+            ${pr.util ? `<p class="use"><b>${esc(t.util)}:</b> ${esc(tx(pr.util))}</p>` : ''}
             <p>${esc(tx(pr.resumen))}</p>
             ${wins.length ? `<ul class="wins">${wins.map((w) => `<li>${esc(w)}</li>`).join('')}</ul>` : ''}
-            <div class="tags">${(pr.stack || []).map((s) => `<span class="tag">${esc(tx(s))}</span>`).join('')}</div>
+            ${tags(pr)}
             ${links(pr)}
           </div>
         </article>`
     }).join('')
 
-    // Filtros: solo categorías que tienen proyectos en "Más proyectos"
     const usadas = Object.keys(D.categorias).filter((id) => resto.some((p) => p.categoria === id))
     if (filtro !== 'todas' && !usadas.includes(filtro)) filtro = 'todas'
-    $('#filters').setAttribute('aria-label', T().seccionMas)
+    $('#filters').setAttribute('aria-label', t.seccionMas)
     $('#filters').innerHTML =
-      `<button type="button" class="filter" data-f="todas" aria-pressed="${filtro === 'todas'}">${esc(T().todas)} <span class="count">${resto.length}</span></button>` +
+      `<button type="button" class="filter" data-f="todas" aria-pressed="${filtro === 'todas'}">${esc(t.todas)} <span class="count">${resto.length}</span></button>` +
       usadas.map((id) => {
         const c = cat(id)
         return `<button type="button" class="filter" data-f="${id}" data-c="${esc(c.color)}" aria-pressed="${filtro === id}">${esc(tx(c))} <span class="count">${resto.filter((p) => p.categoria === id).length}</span></button>`
@@ -151,13 +181,34 @@
       const c = cat(pr.categoria)
       return `
         <article class="card mini" data-c="${esc(c.color)}">
-          <div class="mini-top"><span class="mini-icon">${icon(pr.icono)}</span><div><span class="pill">${esc(tx(c))}</span></div></div>
+          <div class="mini-top"><span class="mini-icon">${icon(pr.icono)}</span>${meta(pr, c)}</div>
           <h3>${esc(tx(pr.titulo))}</h3>
           <p>${esc(tx(pr.resumen))}</p>
-          <div class="tags">${(pr.stack || []).map((s) => `<span class="tag">${esc(tx(s))}</span>`).join('')}</div>
+          ${tags(pr)}
           ${links(pr)}
         </article>`
     }).join('')
+  }
+
+  function renderServices() {
+    const colors = ['esmeralda', 'ambar', 'cielo', 'fucsia', 'indigo', 'rosa']
+    $('#services').innerHTML = D.servicios.map((s, i) => `
+      <div class="service" data-c="${colors[i % colors.length]}">
+        <span class="mini-icon">${icon(s.icono)}</span>
+        <h3>${esc(tx(s.titulo))}</h3>
+        <p>${esc(tx(s.texto))}</p>
+        ${s.ejemplo ? `<p class="service-eg">${esc(tx(s.ejemplo))}</p>` : ''}
+      </div>`).join('')
+  }
+
+  function renderProcess() {
+    $('#process').innerHTML = (D.proceso || []).map((p, i) => `
+      <li class="step-p"><span class="step-n">${i + 1}</span><div><h3>${esc(tx(p.titulo))}</h3><p>${esc(tx(p.texto))}</p></div></li>`).join('')
+    $('#terms').innerHTML = `<h3>${esc(T().condiciones)}</h3><dl>` + (D.condiciones || []).map((c) => `
+      <div class="term">${icon(c.icono)}<dt>${esc(tx(c.etiqueta))}</dt><dd>${esc(tx(c.valor))}</dd></div>`).join('') + '</dl>'
+    const note = $('#ai-note')
+    note.hidden = !D.notaIA
+    if (D.notaIA) note.innerHTML = `${icon('robot')}<span>${esc(tx(D.notaIA))}</span>`
   }
 
   function renderTimeline() {
@@ -177,28 +228,37 @@
     }).join('')
   }
 
-  function renderServices() {
-    const colors = ['esmeralda', 'ambar', 'cielo', 'fucsia', 'indigo', 'rosa']
-    $('#services').innerHTML = D.servicios.map((s, i) => `
-      <div class="service" data-c="${colors[i % colors.length]}">
-        <span class="mini-icon">${icon(s.icono)}</span>
-        <h3>${esc(tx(s.titulo))}</h3>
-        <p>${esc(tx(s.texto))}</p>
-      </div>`).join('')
+  function renderQuotes() {
+    const list = (D.testimonios || []).filter((q) => q && q.texto)
+    $('#testimonios').hidden = list.length === 0
+    $('#quotes').innerHTML = list.map((q) => `
+      <figure class="quote"><blockquote>${esc(tx(q.texto))}</blockquote><figcaption><b>${esc(q.nombre)}</b> · ${esc(tx(q.cargo))}</figcaption></figure>`).join('')
   }
 
   function renderContact() {
     const c = D.contacto, t = T(), p = D.perfil
+    const cv = p.cv && typeof p.cv === 'object' ? p.cv : { es: p.cv, en: p.cv }
+    $('#contact-cta').innerHTML = `
+      <div class="cta-row">
+        ${c.whatsapp ? `<a class="btn btn-light" href="https://wa.me/${esc(c.whatsapp)}" target="_blank" rel="noopener">${icon('whatsapp')} ${esc(t.escribirWhatsapp)}</a>` : ''}
+        ${c.telegram ? `<a class="btn btn-light" href="https://t.me/${esc(c.telegram)}" target="_blank" rel="noopener">${icon('telegram')} ${esc(t.escribirTelegram)}</a>` : ''}
+        ${c.email ? `<a class="btn btn-outline-light" href="${esc(mailto())}">${icon('correo')} ${esc(t.escribirCorreo)}</a>` : ''}
+      </div>
+      ${p.cv ? `<div class="team-box"><p>${esc(t.contactoEquipo)}</p><div class="cta-row">
+        <a class="btn btn-outline-light btn-sm" href="${esc(cv.es)}" target="_blank" rel="noopener">${icon('descarga')} ${esc(t.cvEs)}</a>
+        <a class="btn btn-outline-light btn-sm" href="${esc(cv.en)}" target="_blank" rel="noopener">${icon('descarga')} ${esc(t.cvEn)}</a>
+      </div></div>` : ''}`
     const items = []
     if (c.email) items.push(`
       <div class="contact-item">${icon('correo')}
-        <span class="grow"><span class="label">Email</span><a class="value" href="mailto:${esc(c.email)}" style="text-decoration:none;color:inherit">${esc(c.email)}</a></span>
+        <span class="grow"><span class="label">Email</span><a class="value" href="${esc(mailto())}" style="text-decoration:none;color:inherit">${esc(c.email)}</a></span>
         <button type="button" class="copy-btn" data-copy="${esc(c.email)}">${esc(t.copiar)}</button>
       </div>`)
     if (c.telegram) items.push(`<a class="contact-item" href="https://t.me/${esc(c.telegram)}" target="_blank" rel="noopener">${icon('telegram')}<span class="grow"><span class="label">Telegram</span><span class="value">@${esc(c.telegram)}</span></span></a>`)
-    if (c.github) items.push(`<a class="contact-item" href="${esc(c.github)}" target="_blank" rel="noopener">${icon('github')}<span class="grow"><span class="label">GitHub</span><span class="value">${esc(c.github.replace(/^https?:\/\//, ''))}</span></span></a>`)
+    if (c.whatsapp) items.push(`<a class="contact-item" href="https://wa.me/${esc(c.whatsapp)}" target="_blank" rel="noopener">${icon('whatsapp')}<span class="grow"><span class="label">WhatsApp</span><span class="value">+${esc(c.whatsapp)}</span></span></a>`)
     if (c.linkedin) items.push(`<a class="contact-item" href="${esc(c.linkedin)}" target="_blank" rel="noopener">${icon('linkedin')}<span class="grow"><span class="label">LinkedIn</span><span class="value">${esc(c.linkedin.replace(/^https?:\/\/(www\.)?/, ''))}</span></span></a>`)
-    if (p.cv) items.push(`<a class="contact-item" href="${esc(p.cv)}" target="_blank" rel="noopener">${icon('descarga')}<span class="grow"><span class="label">CV</span><span class="value">${esc(t.descargarCV)} (PDF)</span></span></a>`)
+    if (c.github) items.push(`<a class="contact-item" href="${esc(c.github)}" target="_blank" rel="noopener">${icon('github')}<span class="grow"><span class="label">GitHub</span><span class="value">${esc(c.github.replace(/^https?:\/\//, ''))}</span></span></a>`)
+    if (p.cv) items.push(`<a class="contact-item" href="${esc(cvUrl())}" target="_blank" rel="noopener">${icon('descarga')}<span class="grow"><span class="label">CV</span><span class="value">${esc(t.descargarCV)} (PDF)</span></span></a>`)
     $('#contact-list').innerHTML = items.join('')
     $('#footer-name').textContent = `© ${new Date().getFullYear()} ${p.nombre}`
   }
@@ -215,7 +275,7 @@
   }
 
   function renderAll() {
-    renderHeader(); renderHero(); renderAbout(); renderProjects(); renderTimeline(); renderServices(); renderContact(); renderTexts(); renderThemeIcon()
+    renderHeader(); renderHero(); renderAbout(); renderProjects(); renderServices(); renderProcess(); renderTimeline(); renderQuotes(); renderContact(); renderTexts(); renderThemeIcon()
   }
 
   // ---------- Eventos ----------

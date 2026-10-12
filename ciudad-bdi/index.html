@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ciudad BDI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&family=JetBrains+Mono&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="../" style="position:fixed;right:12px;bottom:12px;z-index:50;padding:8px 14px;border-radius:999px;background:#0b8f66;color:#fff;font:600 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 6px 18px rgb(0 0 0/.3)">← Portafolio de Dariel</a>
+<div class="app">
+  <header class="bar">
+    <h1>Ciudad BDI · simulación con agentes</h1>
+    <div class="time">
+      <span id="clock">05:00</span>
+      <span id="day">Día 1</span>
+    </div>
+    <div class="controls">
+      <button id="pause" type="button" aria-pressed="false">Pausa</button>
+      <label class="speed" for="speed">Velocidad
+        <select id="speed">
+          <option value="10">10 min/s</option>
+          <option value="60" selected>1 h/s</option>
+          <option value="240">4 h/s</option>
+          <option value="720">12 h/s</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <div class="counts">
+    <span><b data-count="sleep">0</b> durmiendo</span>
+    <span><b data-count="relax">0</b> en casa</span>
+    <span><b data-count="travel">0</b> en camino</span>
+    <span><b data-count="work">0</b> trabajando</span>
+    <span><b data-count="eat">0</b> comiendo</span>
+  </div>
+
+  <div class="counts traffic">
+    <span><b data-count="full">0</b> calles llenas ahora</span>
+    <span><b data-count="avgTrip">–</b> viaje medio hoy</span>
+    <span><b data-count="late">0</b> llegadas tarde hoy</span>
+    <span><b data-count="busiest">–</b> calle más cargada</span>
+    <span><b data-count="works">0</b> obras activas</span>
+    <span><b data-count="detours">0</b> desvíos por obras hoy</span>
+    <span><b data-count="radio">–</b> último boletín de radio</span>
+    <label class="toggle" for="works-mode"><input id="works-mode" type="checkbox"> Poner obras con clic</label>
+    <label class="toggle second" for="show-traffic"><input id="show-traffic" type="checkbox" checked> Ver tráfico</label>
+  </div>
+
+  <div class="main">
+    <div class="map-wrap">
+      <canvas id="map" aria-label="Mapa de la ciudad visto desde arriba"></canvas>
+    </div>
+    <aside class="panel">
+      <div class="panel-head">
+        <h2>Persona</h2>
+        <input id="person-id" type="number" min="0" value="0" aria-label="Número de persona">
+        <button id="person-next" type="button">Siguiente</button>
+      </div>
+      <div id="inspector"></div>
+    </aside>
+  </div>
+
+  <div class="status">
+    <span id="info">Clic en una persona o edificio para inspeccionar · activa «Poner obras» para cortar calles</span>
+    <span id="summary"></span>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#e2b48f"></i>Hogar</span>
+    <span><i style="background:#9fb4cf"></i>Trabajo</span>
+    <span><i style="background:#7fa66c"></i>Parque</span>
+    <span><i style="background:#5b6170"></i>Calle</span>
+    <span><i style="background:#f5be28"></i>Tráfico</span>
+    <span><i style="background:#e23228"></i>Calle llena</span>
+    <span><i style="background:repeating-linear-gradient(135deg,#e8772e 0 3px,#fff 3px 5px)"></i>Obra</span>
+    <span><i class="dot" style="background:#2f6fe4"></i>Va a trabajar</span>
+    <span><i class="dot" style="background:#f0a020"></i>Va a comer</span>
+    <span><i class="dot" style="background:#e2513b"></i>Va a casa</span>
+  </div>
+</div>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

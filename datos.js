@@ -44,12 +44,12 @@ window.PORTAFOLIO = {
   sobreMi: {
     es: [
       'Soy ingeniero en Ciencias Informáticas (UCI, 2025) y desarrollador full-stack. Me gusta construir sistemas completos: diseño la base de datos, escribo la API, hago la interfaz y lo dejo corriendo con Docker, pruebas automatizadas y monitoreo.',
-      'Mi proyecto más grande es una tienda en línea con 11 microservicios en .NET y Vue, con pagos, devoluciones, cupones, puntos de lealtad y una app instalable. También desarrollé un sistema de agenda de abogados para una institución judicial, que después migré de Node.js a Django manteniendo la misma base de datos.',
+      'Mi proyecto más grande es una tienda en línea con 11 microservicios en .NET y Vue, con pagos, devoluciones, cupones, puntos de lealtad y una app instalable. También desarrollé un sistema de agenda de abogados para una institución judicial, que después migré de Node.js a Django manteniendo la misma base de datos, y una simulación de una ciudad con 300 agentes inteligentes que corre en el navegador.',
       'Vengo de la programación competitiva (ICPC): me gusta entender bien el problema, medir y dejar código que otro pueda mantener.'
     ],
     en: [
       'I am a Computer Science engineer (UCI, 2025) and a full-stack developer. I like building complete systems: I design the database, write the API, build the interface and ship it with Docker, automated tests and monitoring.',
-      'My largest project is an online store with 11 microservices in .NET and Vue, with payments, returns, coupons, loyalty points and an installable app. I also built a lawyer scheduling system for a judicial institution, which I later migrated from Node.js to Django while keeping the same database.',
+      'My largest project is an online store with 11 microservices in .NET and Vue, with payments, returns, coupons, loyalty points and an installable app. I also built a lawyer scheduling system for a judicial institution, which I later migrated from Node.js to Django while keeping the same database, and a browser-based city simulation with 300 intelligent agents.',
       'I come from competitive programming (ICPC): I like to understand the problem well, measure, and leave code that others can maintain.'
     ]
   },
@@ -65,13 +65,13 @@ window.PORTAFOLIO = {
     { grupo: { es: 'Backend', en: 'Backend' }, color: 'ambar',
       items: ['C#', '.NET 8', 'ASP.NET Core', 'Entity Framework Core', 'MediatR', 'Django', 'Express', 'REST', 'Clean Architecture', 'RabbitMQ / MassTransit'] },
     { grupo: { es: 'Frontend', en: 'Frontend' }, color: 'esmeralda',
-      items: ['Vue 3', 'Pinia', 'Vite', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'Chart.js', 'PWA', { es: 'React (básico)', en: 'React (basic)' }] },
+      items: ['Vue 3', 'Pinia', 'Vite', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'Chart.js', 'Canvas', 'PWA', { es: 'React (básico)', en: 'React (basic)' }] },
     { grupo: { es: 'Datos', en: 'Data' }, color: 'cielo',
       items: ['PostgreSQL', 'SQLite', 'Sequelize', { es: 'Optimización de consultas', en: 'Query optimization' }, 'Python', 'scikit-learn', 'Jupyter'] },
     { grupo: { es: 'Infraestructura y calidad', en: 'Infrastructure & quality' }, color: 'indigo',
       items: ['Docker / Compose', 'Linux (Ubuntu Server)', 'Nginx', 'Prometheus', 'Grafana', 'GitHub Actions', 'xUnit', 'Testcontainers', 'Vitest', 'Playwright'] },
     { grupo: { es: 'IA y algoritmos', en: 'AI & algorithms' }, color: 'fucsia',
-      items: [{ es: 'API de Gemini', en: 'Gemini API' }, { es: 'Bots de Telegram', en: 'Telegram bots' }, { es: 'Árboles y bosques de decisión', en: 'Decision trees & forests' }, { es: 'Redes neuronales', en: 'Neural networks' }, 'ICPC', { es: 'Grafos', en: 'Graphs' }, { es: 'Programación dinámica', en: 'Dynamic programming' }] }
+      items: [{ es: 'API de Gemini', en: 'Gemini API' }, { es: 'Bots de Telegram', en: 'Telegram bots' }, { es: 'Árboles y bosques de decisión', en: 'Decision trees & forests' }, { es: 'Redes neuronales', en: 'Neural networks' }, { es: 'Agentes BDI', en: 'BDI agents' }, { es: 'Simulación', en: 'Simulation' }, 'A*', 'ICPC', { es: 'Grafos', en: 'Graphs' }, { es: 'Programación dinámica', en: 'Dynamic programming' }] }
   ],
 
   // Categorías de proyectos (el filtro de la sección "Más proyectos").
@@ -143,9 +143,30 @@ window.PORTAFOLIO = {
       demo: '' // PENDIENTE: enlace al bot (t.me/...) si es público
     },
     {
-      id: 'easypos',
+      id: 'ciudad-bdi',
       visible: true,
       destacado: true,
+      categoria: 'ia',
+      icono: 'cerebro',
+      imagen: 'assets/ciudad-bdi.webp',
+      titulo: { es: 'Ciudad BDI — simulación con agentes', en: 'BDI City — agent-based simulation' },
+      resumen: {
+        es: 'Una ciudad vista desde arriba donde 300 personas deciden solas qué hacer: van al trabajo, comen, descansan, sufren atascos y esquivan obras. Nada está guionizado: la hora punta y los desvíos salen de sus decisiones.',
+        en: 'A top-down city where 300 people decide on their own what to do: they commute, eat, rest, get stuck in traffic and avoid roadworks. Nothing is scripted: rush hour and detours emerge from their decisions.'
+      },
+      logros: {
+        es: ['Cada habitante es un agente BDI (creencias, deseos e intenciones) con una capa que delibera y otra que reacciona', 'Rutas con A* según el tráfico del momento; las personas aprenden de sus atascos y salen antes', 'Motor determinista y separado de la pantalla, en JavaScript puro sin dependencias'],
+        en: ['Each resident is a BDI agent (beliefs, desires, intentions) with a deliberative layer and a reactive one', 'A* routing based on live traffic; people learn from jams and leave earlier', 'Deterministic engine decoupled from rendering, in plain JavaScript with no dependencies']
+      },
+      stack: ['JavaScript', 'Canvas', { es: 'Agentes BDI', en: 'BDI agents' }, 'A*', { es: 'Simulación', en: 'Simulation' }],
+      repos: ['ciudad-bdi'],
+      // Demo en vivo: funciona cuando activas GitHub Pages en el repositorio ciudad-bdi (ver README).
+      demo: 'https://darielangel.github.io/ciudad-bdi/'
+    },
+    {
+      id: 'easypos',
+      visible: true,
+      destacado: false,
       categoria: 'backend',
       icono: 'capas',
       titulo: { es: 'EasyPOS — API con Clean Architecture', en: 'EasyPOS — Clean Architecture API' },
@@ -177,7 +198,7 @@ window.PORTAFOLIO = {
     },
     {
       id: 'auth-identity',
-      visible: true,
+      visible: false, // oculto para que la cuadrícula quede pareja; cámbialo a true si lo quieres mostrar
       destacado: false,
       categoria: 'backend',
       icono: 'llave',

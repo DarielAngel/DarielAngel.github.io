@@ -47,7 +47,7 @@ window.PORTAFOLIO = {
     telegram: 'darielangel', // sin la @
     whatsapp: '', // PENDIENTE: número con código de país, solo dígitos (ej. 5355555555). Vacío = no se muestra
     github: 'https://github.com/DarielAngel',
-    linkedin: '' // PENDIENTE: URL de tu LinkedIn. Vacío = no se muestra
+    linkedin: 'https://www.linkedin.com/in/dariel-angel-arro-moreno-8715a72a4'
   },
 
   sobreMi: {
@@ -302,7 +302,19 @@ window.PORTAFOLIO = {
   ],
 
   // Experiencia y educación, de lo más reciente a lo más antiguo.
+  // tipo: 'trabajo' | 'estudio' | 'certificacion' (esta última admite "enlace" para verificarla).
   trayectoria: [
+    {
+      tipo: 'certificacion',
+      fechas: { es: 'oct. 2026', en: 'Oct 2026' },
+      puesto: { es: 'Foundational C# with Microsoft', en: 'Foundational C# with Microsoft' },
+      lugar: 'freeCodeCamp · Microsoft',
+      detalle: {
+        es: ['Certificación de fundamentos de C# y .NET emitida por freeCodeCamp en colaboración con Microsoft.'],
+        en: ['C# and .NET fundamentals certification issued by freeCodeCamp in partnership with Microsoft.']
+      },
+      enlace: 'https://freecodecamp.org/certification/darielangel/foundational-c-sharp-with-microsoft'
+    },
     {
       tipo: 'trabajo',
       fechas: { es: '2025 – actualidad', en: '2025 – present' },
@@ -397,7 +409,7 @@ window.PORTAFOLIO = {
       verProyectos: 'Ver proyectos', pedirPresupuesto: 'Pide un presupuesto', descargarCV: 'Descargar CV', hola: 'Hola, soy',
       seccionSobre: 'Sobre mí', seccionHabilidades: 'Con qué trabajo',
       seccionDestacados: 'Proyectos destacados', seccionMas: 'Más proyectos', todas: 'Todos', util: 'Para qué sirve',
-      seccionTrayectoria: 'Experiencia y educación', trabajo: 'Trabajo', estudio: 'Formación',
+      seccionTrayectoria: 'Experiencia, formación y certificaciones', trabajo: 'Trabajo', estudio: 'Formación', certificacion: 'Certificación', verCredencial: 'Ver credencial',
       seccionServicios: 'Qué puedo hacer por ti', seccionTrabajo: 'Cómo trabajar conmigo', condiciones: 'Condiciones',
       seccionContacto: 'Hablemos de tu proyecto',
       contactoTexto: 'Cuéntame qué necesitas, para cuándo y, si lo tienes, un ejemplo de algo parecido. Te respondo con una propuesta.',
@@ -415,7 +427,7 @@ window.PORTAFOLIO = {
       verProyectos: 'See projects', pedirPresupuesto: 'Get a quote', descargarCV: 'Download CV', hola: 'Hi, I’m',
       seccionSobre: 'About me', seccionHabilidades: 'What I work with',
       seccionDestacados: 'Featured projects', seccionMas: 'More projects', todas: 'All', util: 'What it’s for',
-      seccionTrayectoria: 'Experience & education', trabajo: 'Work', estudio: 'Education',
+      seccionTrayectoria: 'Experience, education & certifications', trabajo: 'Work', estudio: 'Education', certificacion: 'Certification', verCredencial: 'View credential',
       seccionServicios: 'What I can do for you', seccionTrabajo: 'How to work with me', condiciones: 'Terms',
       seccionContacto: 'Let’s talk about your project',
       contactoTexto: 'Tell me what you need, by when and, if you have one, an example of something similar. I’ll reply with a proposal.',

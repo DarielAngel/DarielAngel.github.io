@@ -32,6 +32,7 @@
     documento: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
     cohete: '<path d="M12 15c-2-2-3-5-1-9 2-3 6-3 8-3 0 2 0 6-3 8-4 2-7 1-9-1"/><path d="M9 13 5 17M7 14l-3-1 3-3M10 17l1 3 3-3"/><circle cx="15" cy="9" r="1.3"/>',
     whatsapp: '<path d="M4 20l1.3-4A8 8 0 1 1 8 19z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.6-2-.9-.8.8c-1-.4-1.9-1.3-2.3-2.3l.8-.8-.9-2L9.5 9z"/>',
+    insignia: '<circle cx="12" cy="9" r="6"/><path d="m8.5 13.8-1.5 7.2 5-3 5 3-1.5-7.2"/><path d="m9.8 9 1.6 1.6 3-3"/>',
     birrete: '<path d="m2 9 10-5 10 5-10 5L2 9z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/>'
   }
   const icon = (name, cls = '') =>
@@ -213,16 +214,19 @@
 
   function renderTimeline() {
     const t = T()
+    const KIND = { trabajo: ['esmeralda', 'maletin'], estudio: ['indigo', 'birrete'], certificacion: ['ambar', 'insignia'] }
     $('#timeline').innerHTML = D.trayectoria.map((s) => {
-      const work = s.tipo === 'trabajo'
+      const [color, ico] = KIND[s.tipo] || KIND.estudio
+      const link = s.enlace ? `<a class="repo-link" href="${esc(s.enlace)}" target="_blank" rel="noopener">${icon('externo')}<span>${esc(t.verCredencial)}</span></a>` : ''
       return `
-        <div class="step" data-c="${work ? 'esmeralda' : 'indigo'}">
-          <span class="step-icon">${icon(work ? 'maletin' : 'birrete')}</span>
+        <div class="step" data-c="${color}">
+          <span class="step-icon">${icon(ico)}</span>
           <div class="step-card">
-            <div class="step-meta"><span class="step-date">${esc(tx(s.fechas))}</span><span class="step-kind">${esc(work ? t.trabajo : t.estudio)}</span></div>
+            <div class="step-meta"><span class="step-date">${esc(tx(s.fechas))}</span><span class="step-kind">${esc(t[s.tipo] || t.estudio)}</span></div>
             <h3>${esc(tx(s.puesto))}</h3>
             <span class="step-place">${esc(s.lugar)}</span>
             <ul>${(tx(s.detalle) || []).map((d) => `<li>${esc(d)}</li>`).join('')}</ul>
+            ${link ? `<div class="links">${link}</div>` : ''}
           </div>
         </div>`
     }).join('')
